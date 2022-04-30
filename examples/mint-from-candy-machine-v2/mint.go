@@ -20,7 +20,7 @@ import (
 var candyMachineV2ProgramID = solana.MustPublicKeyFromBase58("cndyAnrLdpjq1Ssp1z8xxDsB8dxe7u4HL5Nxi2K5WXZ")
 
 func main() {
-	user, err := solana.PrivateKeyFromSolanaKeygenFile("/path/to/.config/solana/id.json")
+	user, err := solana.PrivateKeyFromSolanaKeygenFile("/path/to/.config/solana/id.json asd")
 	if err != nil {
 		panic(err)
 	}
