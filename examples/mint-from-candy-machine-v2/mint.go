@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	nftcandymachinev2 "github.com/FarinM/metaplex-go/clients/nft-candy-machine-v2"
+	tokenmetadata "github.com/FarinM/metaplex-go/clients/token-metadata"
 	"github.com/davecgh/go-spew/spew"
 	bin "github.com/gagliardetto/binary"
-	nftcandymachinev2 "github.com/gagliardetto/metaplex-go/clients/nft-candy-machine-v2"
-	token_metadata "github.com/gagliardetto/metaplex-go/clients/token-metadata"
 	"github.com/gagliardetto/solana-go"
 	atok "github.com/gagliardetto/solana-go/programs/associated-token-account"
 	"github.com/gagliardetto/solana-go/programs/system"
@@ -128,7 +128,7 @@ func mint(
 			SetMasterEditionAccount(masterEdition).
 			SetMintAuthorityAccount(userKeyPair.PublicKey()).
 			SetUpdateAuthorityAccount(userKeyPair.PublicKey()).
-			SetTokenMetadataProgramAccount(token_metadata.ProgramID).
+			SetTokenMetadataProgramAccount(tokenmetadata.ProgramID).
 			SetTokenProgramAccount(token.ProgramID).
 			SetSystemProgramAccount(system.ProgramID).
 			SetRentAccount(solana.SysVarRentPubkey).
@@ -218,10 +218,10 @@ func getMetadata(mint solana.PublicKey) (solana.PublicKey, error) {
 	addr, _, err := solana.FindProgramAddress(
 		[][]byte{
 			[]byte("metadata"),
-			token_metadata.ProgramID.Bytes(),
+			tokenmetadata.ProgramID.Bytes(),
 			mint.Bytes(),
 		},
-		token_metadata.ProgramID,
+		tokenmetadata.ProgramID,
 	)
 	return addr, err
 }
@@ -230,11 +230,11 @@ func getMasterEdition(mint solana.PublicKey) (solana.PublicKey, error) {
 	addr, _, err := solana.FindProgramAddress(
 		[][]byte{
 			[]byte("metadata"),
-			token_metadata.ProgramID.Bytes(),
+			tokenmetadata.ProgramID.Bytes(),
 			mint.Bytes(),
 			[]byte("edition"),
 		},
-		token_metadata.ProgramID,
+		tokenmetadata.ProgramID,
 	)
 	return addr, err
 }

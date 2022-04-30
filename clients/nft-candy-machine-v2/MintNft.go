@@ -236,6 +236,37 @@ func (inst *MintNft) SetInstructionSysvarAccountAccount(instructionSysvarAccount
 // GetInstructionSysvarAccountAccount gets the "instructionSysvarAccount" account.
 func (inst *MintNft) GetInstructionSysvarAccountAccount() *ag_solanago.AccountMeta {
 	return inst.AccountMetaSlice.Get(15)
+
+}
+
+func (inst *MintNft) SetSomething1(instructionSysvarAccount ag_solanago.PublicKey) *MintNft {
+	inst.AccountMetaSlice[16] = ag_solanago.Meta(instructionSysvarAccount)
+	return inst
+}
+
+// GetInstructionSysvarAccountAccount gets the "instructionSysvarAccount" account.
+func (inst *MintNft) GetSomething1() *ag_solanago.AccountMeta {
+	return inst.AccountMetaSlice.Get(16)
+}
+
+func (inst *MintNft) SetSomething2(instructionSysvarAccount ag_solanago.PublicKey) *MintNft {
+	inst.AccountMetaSlice[17] = ag_solanago.Meta(instructionSysvarAccount)
+	return inst
+}
+
+// GetInstructionSysvarAccountAccount gets the "instructionSysvarAccount" account.
+func (inst *MintNft) GetSomething2() *ag_solanago.AccountMeta {
+	return inst.AccountMetaSlice.Get(17)
+}
+
+func (inst *MintNft) SetSomething3(instructionSysvarAccount ag_solanago.PublicKey) *MintNft {
+	inst.AccountMetaSlice[18] = ag_solanago.Meta(instructionSysvarAccount)
+	return inst
+}
+
+// GetInstructionSysvarAccountAccount gets the "instructionSysvarAccount" account.
+func (inst *MintNft) GetSomething3() *ag_solanago.AccountMeta {
+	return inst.AccountMetaSlice.Get(18)
 }
 
 func (inst MintNft) Build() *Instruction {
@@ -313,6 +344,16 @@ func (inst *MintNft) Validate() error {
 		if inst.AccountMetaSlice[15] == nil {
 			return errors.New("accounts.InstructionSysvarAccount is not set")
 		}
+		if inst.AccountMetaSlice[16] == nil {
+			return errors.New("accounts.something1 is not set")
+		}
+		if inst.AccountMetaSlice[17] == nil {
+			return errors.New("accounts.something2 is not set")
+		}
+		if inst.AccountMetaSlice[18] == nil {
+			return errors.New("accounts.something3 is not set")
+		}
+
 	}
 	return nil
 }
@@ -348,6 +389,9 @@ func (inst *MintNft) EncodeToTree(parent ag_treeout.Branches) {
 						accountsBranch.Child(ag_format.Meta("               clock", inst.AccountMetaSlice.Get(13)))
 						accountsBranch.Child(ag_format.Meta("   recentBlockhashes", inst.AccountMetaSlice.Get(14)))
 						accountsBranch.Child(ag_format.Meta("   instructionSysvar", inst.AccountMetaSlice.Get(15)))
+						accountsBranch.Child(ag_format.Meta("   s1", inst.AccountMetaSlice.Get(16)))
+						accountsBranch.Child(ag_format.Meta("   s2", inst.AccountMetaSlice.Get(17)))
+						accountsBranch.Child(ag_format.Meta("   s3", inst.AccountMetaSlice.Get(18)))
 					})
 				})
 		})
@@ -390,7 +434,10 @@ func NewMintNftInstruction(
 	rent ag_solanago.PublicKey,
 	clock ag_solanago.PublicKey,
 	recentBlockhashes ag_solanago.PublicKey,
-	instructionSysvarAccount ag_solanago.PublicKey) *MintNft {
+	instructionSysvarAccount ag_solanago.PublicKey,
+	s1 ag_solanago.PublicKey,
+	s2 ag_solanago.PublicKey,
+	s3 ag_solanago.PublicKey) *MintNft {
 	return NewMintNftInstructionBuilder().
 		SetCreatorBump(creatorBump).
 		SetCandyMachineAccount(candyMachine).
@@ -408,5 +455,9 @@ func NewMintNftInstruction(
 		SetRentAccount(rent).
 		SetClockAccount(clock).
 		SetRecentBlockhashesAccount(recentBlockhashes).
-		SetInstructionSysvarAccountAccount(instructionSysvarAccount)
+		SetInstructionSysvarAccountAccount(instructionSysvarAccount).
+		SetSomething1(s1).
+		SetSomething2(s2).
+		SetSomething3(s3)
+
 }
